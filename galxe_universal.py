@@ -182,21 +182,22 @@ async def galxe_universal(context: BrowserContext, account_id, link, claim_flag 
     dis_img = await galxe_page.locator(
         'img[src="https://b.galxestatic.com/new-web-prd/assets/image/credential-types/icon-discord.svg"]').all()
     for img in dis_img:
-        if await img.locator('../..').locator('button[type="button"]').count() < 1:
-            await random_pause()
-            async with context.expect_page() as pup:
-                await img.click()
-            pup = await pup.value
-            await random_pause()
-            await pup.locator('button[type="button"]').click()
-            await random_pause()
+        if await img.locator('../..').locator('button[type="button"]').count() > 0:
+            continue
+        await random_pause()
+        async with context.expect_page() as pup:
+            await img.click()
+        pup = await pup.value
+        await random_pause()
+        await pup.locator('button[type="button"]').click()
+        await random_pause()
 
         await img.locator('../..').locator('button[data-state="closed"]').click()
         await random_pause()
 
     if claim_flag:
         await galxe_page.locator('div[class="flex gap-4 w-full justify-end items-center"]').locator('button').click()
-        await random_pause()
+        await random_pause(4,5)
         if await galxe_page.get_by_role('button', name='Claim Directly', exact=True).count() > 0:
             async with context.expect_page() as pup:
                 await galxe_page.get_by_role('button', name='Claim Directly', exact=True).click()
