@@ -191,7 +191,7 @@ async def galxe_universal(context: BrowserContext, account_id, link, claim_flag 
         await random_pause()
         await pup.locator('button[type="button"]').click()
         await random_pause()
-
+        await pup.close()
         await img.locator('../..').locator('button[data-state="closed"]').click()
         await random_pause()
 
